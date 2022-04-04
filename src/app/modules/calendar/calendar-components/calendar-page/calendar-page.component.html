@@ -1,1 +1,18 @@
-<p>calendar-page works!</p>
+<div>
+  <div class="header-section" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+    <mat-icon class="header-icon">calendar_today</mat-icon>
+    <div class="title-text-style">
+      Calendar
+    </div>
+    <div class="title-text-style today">
+      <span>Today</span>
+    </div>
+    <div class="title-text-style">{{ getCurrentDay() | date:'MMMM d, y'}}</div>
+    <ng-container>
+      <mat-icon class="pointer-cursor">keyboard_arrow_left</mat-icon>
+      <mat-icon class="pointer-cursor smaller-gap">keyboard_arrow_right</mat-icon>
+    </ng-container>
+  </div>
+  <mat-divider></mat-divider>
+  <div></div>
+</div>

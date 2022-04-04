@@ -12,4 +12,7 @@ export class CalendarPageComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  getCurrentDay() {
+    return new Date();
+  }
 }

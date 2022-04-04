@@ -1,0 +1,29 @@
+
+.header-section {
+  padding: 20px 20px 20px 40px;
+  .today {
+    border-radius: 5px;
+    background-color: #6a9db2;
+  }
+  .title-text-style {
+    font-size: 25px;
+    color: #606367;
+    &.today {
+      font-size: 15px;
+      padding: 10px;
+      color: #dce9ec;
+    }
+  }
+  .header-icon {
+    font-size: 35px;
+    margin-top: -10px;
+    color: #6a9db2;
+  }
+}
+
+.pointer-cursor {
+  cursor: pointer;
+  &.smaller-gap {
+    margin-left: -15px;
+  }
+}
