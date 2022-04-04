@@ -6,8 +6,7 @@ import { CalendarPageComponent } from './calendar-components/calendar-page/calen
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { CalendarBodyModelComponent } from './calendar-components/calendar-page/calendar-body-model/calendar-body-model/calendar-body-model.component';
-
+import { CalendarBodyModelComponent } from './calendar-components/calendar-body-model/calendar-body-model.component';
 
 @NgModule({
   declarations: [
