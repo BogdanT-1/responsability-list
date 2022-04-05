@@ -1,1 +1,13 @@
-<p>calendar-body-model works!</p>
+<div class="container">
+  <div fxLayout="row" fxLayoutAlign="start center" class="day-container">
+    <ng-container *ngFor="let weekday of daysOfWeek">
+      <div class="day-name">{{ weekday }}</div>
+    </ng-container>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start center" class="day-container">
+    <ng-container
+      *ngFor="let day of daysDisplayed">
+      <div class="calendar-day" [@slideInOut]>{{ day.currentDay }}</div>
+    </ng-container>
+  </div>
+</div>
