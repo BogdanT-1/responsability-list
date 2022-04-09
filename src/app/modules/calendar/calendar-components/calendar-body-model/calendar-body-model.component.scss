@@ -26,10 +26,28 @@
   margin-left: 3%;
   margin-right: 2%;
   flex-flow: row wrap;
+  cursor: pointer;
+}
+
+.current-day {
+  color: #d2dfdb;
+  background-color: #2596be;
+  border-radius: 100%;
+  padding: 3px 6px 3px 6px;
 }
 
 .day-container::before, .container::after {
   content: '';
   width: 80%;
   order: 1;
+}
+
+.no-backdrop {
+  background: none;
+}
+
+.custom-day-modal {
+  mat-dialog-container {
+    padding: 0;
+  }
 }

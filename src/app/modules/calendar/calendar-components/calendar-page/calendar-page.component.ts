@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { months } from 'src/app/modules/shared/models-constants/months';
+import { getCurrentDay } from 'src/app/modules/shared/functions/get-current-day';
+import { months } from 'src/app/modules/shared/models-constants/months.constant';
 
 @Component({
   selector: 'app-calendar-page',
@@ -11,13 +12,10 @@ export class CalendarPageComponent implements OnInit {
   currentYear: number = 1;
   constructor() {}
   months: string[] = months;
+  getCurrentDay = getCurrentDay;
   ngOnInit(): void {
     this.currentMonth = new Date().getMonth();
     this.currentYear = new Date().getFullYear();
-  }
-
-  getCurrentDay() {
-    return new Date();
   }
 
   modifyDate(direction: number) {

@@ -6,8 +6,10 @@
   </div>
   <div fxLayout="row" fxLayoutAlign="start center" class="day-container">
     <ng-container
-      *ngFor="let day of daysDisplayed">
-      <div class="calendar-day" [@slideInOut]>{{ day.currentDay }}</div>
+      *ngFor="let day of daysDisplayed;let i = index" #dayRef>
+      <div class="calendar-day" [@slideInOut] (click)="opendAddTaskDialog(day, $event)">
+        <span [ngClass]="{'current-day': highlightCurrentDay(day)}"> {{ day.currentDay }} </span>
+      </div>
     </ng-container>
   </div>
 </div>

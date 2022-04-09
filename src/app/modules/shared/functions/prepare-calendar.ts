@@ -1,12 +1,14 @@
+import { DayModel } from "../models-constants/day.model";
 
 export function prepareCalendar(missingDaysBefore: number, missingDaysAfter: number, currentMonthDays: number,
   daysPreviousMonth: number, currentMonth: number, currentYear: number) {
-  let days = [];
+  let days: DayModel[] = [];
   while (missingDaysBefore > 0) {
     days.push({
       currentDay: daysPreviousMonth - missingDaysBefore,
       currentMonth: currentMonth - 1,
-      year: currentMonth - 1 < 0 ? currentYear - 1 : currentYear
+      year: currentMonth - 1 < 0 ? currentYear - 1 : currentYear,
+      tasks: []
     })
     missingDaysBefore--;
   }
@@ -15,7 +17,8 @@ export function prepareCalendar(missingDaysBefore: number, missingDaysAfter: num
     days.push({
       currentDay: i,
       currentMonth: currentMonth,
-      year: currentYear
+      year: currentYear,
+      tasks: []
     })
   }
 
@@ -24,7 +27,8 @@ export function prepareCalendar(missingDaysBefore: number, missingDaysAfter: num
     days.push({
       currentDay: index,
       currentMonth: currentMonth + 1,
-      year: currentMonth + 1 > 11 ? currentYear + 1 : currentYear
+      year: currentMonth + 1 > 11 ? currentYear + 1 : currentYear,
+      tasks: []
     })
     index++;
   }

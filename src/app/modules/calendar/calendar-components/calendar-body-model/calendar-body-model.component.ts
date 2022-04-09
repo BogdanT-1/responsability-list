@@ -1,15 +1,21 @@
 import {
   ChangeDetectorRef,
   Component,
+  ElementRef,
   Input,
   OnChanges,
   OnInit,
+  QueryList,
   SimpleChanges,
+  ViewChildren,
 } from '@angular/core';
 import { trigger, transition, animate, style } from '@angular/animations';
-import { months } from 'src/app/modules/shared/models-constants/months';
-import { DayModel } from 'src/app/modules/shared/models-constants/day';
+import { months } from 'src/app/modules/shared/models-constants/months.constant';
+import { DayModel } from 'src/app/modules/shared/models-constants/day.model';
 import { prepareCalendar } from 'src/app/modules/shared/functions/prepare-calendar';
+import { getCurrentDay } from 'src/app/modules/shared/functions/get-current-day';
+import { MatDialog } from '@angular/material/dialog';
+import { AddTaskDialogComponent } from 'src/app/modules/shared/components/add-task-dialog/add-task-dialog.component';
 
 @Component({
   selector: 'app-calendar-body-model',
@@ -46,7 +52,8 @@ export class CalendarBodyModelComponent implements OnInit, OnChanges {
   missingDaysBefore: number = 0;
   missingDaysAfter: number = 0;
   prepareCalendar = prepareCalendar;
-  constructor(private cdr: ChangeDetectorRef) {}
+  getCurrentDay = getCurrentDay;
+  constructor(private cdr: ChangeDetectorRef, public dialog: MatDialog) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     this.daysCurrentMonth = this.daysInMonth(
@@ -75,6 +82,31 @@ export class CalendarBodyModelComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {}
+
+  opendAddTaskDialog(day: DayModel, event: any) {
+    this.dialog.open(AddTaskDialogComponent, {
+      data: {
+        day: day,
+        positionRelativeToElement: {
+          x: event.x,
+          y: event.y
+        }
+      },
+      width: '10%',
+      height: '15%',
+      panelClass: 'custom-day-modal',
+      backdropClass: 'no-backdrop',
+    });
+  }
+
+  highlightCurrentDay(day: DayModel) {
+    const currentDay = this.getCurrentDay();
+    const transformedDay = new Date(day.year, day.currentMonth - 1, day.currentDay);
+    if (currentDay.getTime() === transformedDay.getTime()) {
+      return true;
+    }
+    return false;
+  }
 
   daysInMonth(month: number, year: number) {
     return new Date(year, month + 1, 0).getDate();
