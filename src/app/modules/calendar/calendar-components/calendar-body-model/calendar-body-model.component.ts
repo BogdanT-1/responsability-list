@@ -92,9 +92,9 @@ export class CalendarBodyModelComponent implements OnInit, OnChanges {
           y: event.y
         }
       },
-      width: '10%',
-      height: '15%',
-      panelClass: 'custom-day-modal',
+      panelClass: 'custom-dialog-container',
+      width: '260px',
+      height: '320px',
       backdropClass: 'no-backdrop',
     });
   }

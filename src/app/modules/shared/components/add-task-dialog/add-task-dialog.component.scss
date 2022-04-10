@@ -1,0 +1,42 @@
+
+.dialog-header {
+  color: #d2dfdb;
+  background-color: #2596be;
+  padding: 14px 0px 14px 10px;
+  font-size: 18px;
+}
+
+.dialog-body {
+  margin-top: 5px;
+}
+
+.action-buttons {
+  .close-button {
+    background-color: #d2dfdb;
+    color: #2596be;
+  }
+  .add-button {
+    background-color: #2596be;
+    color: #d2dfdb;
+  }
+  .add-button[disabled] {
+    color: #9d9e9e;
+    background-color: #d2dfdb;
+  }
+}
+
+.dot {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.dot-low {
+  background-color: yellow;
+}
+.dot-medium {
+  background-color: orange;
+}
+.dot-high {
+  background-color: red;
+}

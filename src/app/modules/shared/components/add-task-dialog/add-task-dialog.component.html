@@ -1,3 +1,37 @@
 <div>
-  <p>add-task-dialog works!</p>
+  <div class="dialog-header">Add a Task for {{ getDate() | date:'MMM d, y' }}</div>
+  <div class="dialog-body">
+    <div [formGroup]="taskForm" fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="8px">
+      <mat-form-field>
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title">
+        <mat-error *ngIf="registerFormControl.title.hasError('required')">
+          Please enter a title
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description"></textarea>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Importance</mat-label>
+        <mat-select formControlName="importance">
+          <mat-option *ngFor="let importance of importanceArray" [value]="importance">
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="18px">
+              <span class ="dot" [ngClass]="{
+                'dot-low' : importance === 'Low',
+                'dot-medium' : importance === 'Medium',
+                'dot-high' : importance === 'High'}">
+              </span>
+              <span>{{importance}}</span>
+            </div>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="action-buttons" fxLayout="row" fxLayoutAlign="space-around center">
+    <button mat-raised-button class="close-button" [mat-dialog-close]="true">Close</button>
+    <button mat-raised-button class="add-button" [disabled]="!taskForm.valid" (click)="onSubmit()">Add</button>
+  </div>
 </div>

@@ -5,12 +5,14 @@ import {
   Inject,
   OnInit,
 } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
   MatDialogConfig,
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { DayModel } from '../../models-constants/day.model';
+import { importances } from '../../models-constants/importantce,constants';
 
 @Component({
   selector: 'app-add-task-dialog',
@@ -22,16 +24,18 @@ export class AddTaskDialogComponent implements OnInit {
   private currentDay: DayModel;
   public innerWidth: any;
   public innerHeight: any;
+  taskForm: FormGroup;
+  importanceArray: string[] = importances;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<AddTaskDialogComponent>
   ) {
     this.positionRelativeToElement = data.positionRelativeToElement;
     this.currentDay = data.day;
-    console.log(this.currentDay);
   }
 
   ngOnInit(): void {
+    this.initFormTask();
     this.innerWidth = window.innerWidth;
     this.innerHeight = window.innerHeight;
     const matDialogConfig = new MatDialogConfig();
@@ -39,8 +43,8 @@ export class AddTaskDialogComponent implements OnInit {
     const positionAdjutmentY = window.innerHeight/2 < this.positionRelativeToElement.y ? 1 : 0;
 
     matDialogConfig.position = {
-      right: `${this.innerWidth - this.positionRelativeToElement.x - (this.innerWidth*10/100) * positionAdjutmentX}px`,
-      top: `${this.positionRelativeToElement.y + 2 - (this.innerHeight*15/100) * positionAdjutmentY}px`,
+      right: `${this.innerWidth - this.positionRelativeToElement.x - 260 * positionAdjutmentX}px`,
+      top: `${this.positionRelativeToElement.y - 320 * positionAdjutmentY}px`,
     };
     this.dialogRef.updatePosition(matDialogConfig.position);
   }
@@ -49,5 +53,27 @@ export class AddTaskDialogComponent implements OnInit {
   onResize(event: any) {
     this.innerWidth = window.innerWidth;
     this.innerHeight = window.innerHeight;
+  }
+
+  get registerFormControl() {
+    return this.taskForm.controls;
+  }
+
+  getDate() {
+    return new Date(this.currentDay.year, this.currentDay.currentMonth - 1, this.currentDay.currentDay);
+  }
+
+  onSubmit() {
+    console.log(this.taskForm.controls.title.value);
+    console.log(this.taskForm.controls.description.value);
+    console.log(this.taskForm.controls.importance.value);
+  }
+
+  initFormTask() {
+    this.taskForm = new FormGroup({
+      title: new FormControl('', [Validators.required]),
+      description: new FormControl(''),
+      importance: new FormControl("Low"),
+    });
   }
 }

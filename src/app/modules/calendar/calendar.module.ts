@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CalendarBodyModelComponent } from './calendar-components/calendar-body-model/calendar-body-model.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { CalendarBodyModelComponent } from './calendar-components/calendar-body-
     CommonModule,
     RouterModule,
     CalendarRoutingModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    ReactiveFormsModule
   ]
 })
 export class CalendarModule { }
