@@ -18,6 +18,26 @@
   background-color: #2596be;
 }
 
+.importance {
+  margin-bottom: 6px;
+  height: 30px;
+  width: 80%;
+  border-radius: 8px;
+  :nth-child(1) {
+    margin-left: 15px;
+    margin-right: 28%;
+  }
+}
+.importance-low {
+  background-color: #ffdf00;
+}
+.importance-medium {
+  background-color: orange;
+}
+.importance-high {
+  background-color: red;
+}
+
 .container {
   margin-top: 25px;
 }
@@ -45,3 +65,21 @@
 .no-backdrop {
   background: none;
 }
+
+.remaining-tasks {
+  background-color: #2596be;
+  color: #d2dfdb;
+  border-radius: 50%;
+  font-size: 20px;
+  height: 32px;
+  width: 12%;
+  text-align:center;
+  margin-left: auto;
+  margin-top: -18px;
+}
+
+::ng-deep .mat-checkbox-checked .mat-checkbox-background,
+.mat-checkbox-indeterminate .mat-checkbox-background {
+  background-color: #2596be !important;
+}
+

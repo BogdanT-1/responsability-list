@@ -16,6 +16,7 @@ import { prepareCalendar } from 'src/app/modules/shared/functions/prepare-calend
 import { getCurrentDay } from 'src/app/modules/shared/functions/get-current-day';
 import { MatDialog } from '@angular/material/dialog';
 import { AddTaskDialogComponent } from 'src/app/modules/shared/components/add-task-dialog/add-task-dialog.component';
+import { CalendarActionsService } from '../../services/calendar-actions.service';
 
 @Component({
   selector: 'app-calendar-body-model',
@@ -53,9 +54,13 @@ export class CalendarBodyModelComponent implements OnInit, OnChanges {
   missingDaysAfter: number = 0;
   prepareCalendar = prepareCalendar;
   getCurrentDay = getCurrentDay;
-  constructor(private cdr: ChangeDetectorRef, public dialog: MatDialog) {}
+  constructor(
+    private cdr: ChangeDetectorRef,
+    public calendarService: CalendarActionsService,
+    public dialog: MatDialog
+  ) {}
 
-  ngOnChanges(changes: SimpleChanges): void {
+  async ngOnChanges(changes: SimpleChanges): Promise<void> {
     this.daysCurrentMonth = this.daysInMonth(
       this.currentMonth,
       this.currentYear
@@ -68,40 +73,67 @@ export class CalendarBodyModelComponent implements OnInit, OnChanges {
     this.missingDaysBefore = this.daysOfWeek.indexOf(
       this.getDayName(new Date(this.currentYear, this.currentMonth, 1))
     );
-    this.missingDaysAfter = this.daysOfWeek.length - 1 - this.daysOfWeek.indexOf(
-      this.getDayName(new Date(this.currentYear, this.currentMonth, this.daysCurrentMonth)));
+    this.missingDaysAfter =
+      this.daysOfWeek.length -
+      1 -
+      this.daysOfWeek.indexOf(
+        this.getDayName(
+          new Date(this.currentYear, this.currentMonth, this.daysCurrentMonth)
+        )
+      );
 
-    this.daysDisplayed = this.prepareCalendar(
+    this.daysDisplayed = await this.prepareCalendar(
       this.missingDaysBefore,
       this.missingDaysAfter,
       this.daysCurrentMonth,
       this.daysPreviousMonth,
       this.currentMonth + 1,
-      this.currentYear
+      this.currentYear,
+      this.calendarService
     );
   }
 
   ngOnInit(): void {}
 
+  stopOpenAction(event: any) {
+    event.stopPropagation();
+  }
+
   opendAddTaskDialog(day: DayModel, event: any) {
-    this.dialog.open(AddTaskDialogComponent, {
+    const dialogRef = this.dialog.open(AddTaskDialogComponent, {
       data: {
         day: day,
         positionRelativeToElement: {
           x: event.x,
-          y: event.y
-        }
+          y: event.y,
+        },
       },
       panelClass: 'custom-dialog-container',
       width: '260px',
       height: '320px',
       backdropClass: 'no-backdrop',
     });
+
+    dialogRef.afterClosed().subscribe(async () => {
+      this.daysDisplayed = await this.prepareCalendar(
+        this.missingDaysBefore,
+        this.missingDaysAfter,
+        this.daysCurrentMonth,
+        this.daysPreviousMonth,
+        this.currentMonth + 1,
+        this.currentYear,
+        this.calendarService
+      );
+    });
   }
 
   highlightCurrentDay(day: DayModel) {
     const currentDay = this.getCurrentDay();
-    const transformedDay = new Date(day.year, day.currentMonth - 1, day.currentDay);
+    const transformedDay = new Date(
+      day.year,
+      day.currentMonth - 1,
+      day.currentDay
+    );
     if (currentDay.getTime() === transformedDay.getTime()) {
       return true;
     }

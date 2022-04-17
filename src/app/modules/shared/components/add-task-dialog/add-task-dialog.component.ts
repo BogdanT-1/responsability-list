@@ -11,6 +11,8 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
+import { CalendarActionsService } from 'src/app/modules/calendar/services/calendar-actions.service';
+import { DailyTask } from '../../models-constants/dailytask.model';
 import { DayModel } from '../../models-constants/day.model';
 import { importances } from '../../models-constants/importantce,constants';
 
@@ -28,6 +30,7 @@ export class AddTaskDialogComponent implements OnInit {
   importanceArray: string[] = importances;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
+    public calendarService: CalendarActionsService,
     public dialogRef: MatDialogRef<AddTaskDialogComponent>
   ) {
     this.positionRelativeToElement = data.positionRelativeToElement;
@@ -63,10 +66,17 @@ export class AddTaskDialogComponent implements OnInit {
     return new Date(this.currentDay.year, this.currentDay.currentMonth - 1, this.currentDay.currentDay);
   }
 
-  onSubmit() {
-    console.log(this.taskForm.controls.title.value);
-    console.log(this.taskForm.controls.description.value);
-    console.log(this.taskForm.controls.importance.value);
+  async onSubmit() {
+    const newTask: DailyTask = {
+      title: this.taskForm.controls.title.value,
+      description: this.taskForm.controls.description.value,
+      importance: this.getImportanceDigit(this.taskForm.controls.importance.value),
+      done: false,
+      assignedDate: `${this.currentDay.currentDay}-${this.currentDay.currentMonth}-${this.currentDay.year}`
+    };
+
+    await this.calendarService.createTask(newTask).toPromise();
+    this.dialogRef.close();
   }
 
   initFormTask() {
@@ -75,5 +85,14 @@ export class AddTaskDialogComponent implements OnInit {
       description: new FormControl(''),
       importance: new FormControl("Low"),
     });
+  }
+
+  getImportanceDigit(importance: string) {
+    switch(importance) {
+      case "Low": return 0;
+      case "Medium": return 1;
+      case "High": return 2;
+      default: return 0
+    }
   }
 }
