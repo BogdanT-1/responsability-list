@@ -26,7 +26,9 @@ export class AddTaskDialogComponent implements OnInit {
   private currentDay: DayModel;
   public innerWidth: any;
   public innerHeight: any;
+  editMode: boolean;
   taskForm: FormGroup;
+  editedTask: DailyTask;
   importanceArray: string[] = importances;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -35,10 +37,15 @@ export class AddTaskDialogComponent implements OnInit {
   ) {
     this.positionRelativeToElement = data.positionRelativeToElement;
     this.currentDay = data.day;
+    this.editMode = !!data.task;
+    this.editedTask = data.task;
   }
 
   ngOnInit(): void {
     this.initFormTask();
+    if (this.editMode) {
+      this.initTaskDetails();
+    }
     this.innerWidth = window.innerWidth;
     this.innerHeight = window.innerHeight;
     const matDialogConfig = new MatDialogConfig();
@@ -66,7 +73,7 @@ export class AddTaskDialogComponent implements OnInit {
     return new Date(this.currentDay.year, this.currentDay.currentMonth - 1, this.currentDay.currentDay);
   }
 
-  async onSubmit() {
+  async onCreate() {
     const newTask: DailyTask = {
       title: this.taskForm.controls.title.value,
       description: this.taskForm.controls.description.value,
@@ -80,6 +87,20 @@ export class AddTaskDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  async onEdit() {
+    const newTask: DailyTask = {
+      title: this.taskForm.controls.title.value,
+      description: this.taskForm.controls.description.value,
+      importance: this.getImportanceDigit(this.taskForm.controls.importance.value),
+      done: false,
+      assignedDate: this.editedTask.assignedDate,
+      ID: this.editedTask.ID
+    };
+
+    await this.calendarService.editTask(newTask).toPromise();
+    this.dialogRef.close(true);
+  }
+
   initFormTask() {
     this.taskForm = new FormGroup({
       title: new FormControl('', [Validators.required]),
@@ -88,12 +109,27 @@ export class AddTaskDialogComponent implements OnInit {
     });
   }
 
+  initTaskDetails() {
+    this.taskForm.controls.title.setValue(this.editedTask.title);
+    this.taskForm.controls.description.setValue(this.editedTask.description);
+    this.taskForm.controls.importance.setValue(this.getImportanceValues(this.editedTask.importance));
+  }
+
   getImportanceDigit(importance: string) {
     switch(importance) {
       case "Low": return 0;
       case "Medium": return 1;
       case "High": return 2;
       default: return 0
+    }
+  }
+
+  getImportanceValues(importance: number) {
+    switch(importance) {
+      case 0: return "Low";
+      case 1: return "Medium";
+      case 2: return "High";
+      default: return "Low";
     }
   }
 }

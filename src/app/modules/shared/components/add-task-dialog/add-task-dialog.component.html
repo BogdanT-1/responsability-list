@@ -1,5 +1,8 @@
 <div>
-  <div class="dialog-header">Add a Task for {{ getDate() | date:'MMM d, y' }}</div>
+  <div *ngIf="!editMode;else edit" class="dialog-header">Add a Task for {{ getDate() | date:'MMM d, y' }}</div>
+  <ng-template #edit>
+    <div class="dialog-header">Edit Task</div>
+  </ng-template>
   <div class="dialog-body">
     <div [formGroup]="taskForm" fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="8px">
       <mat-form-field>
@@ -32,6 +35,9 @@
   </div>
   <div class="action-buttons" fxLayout="row" fxLayoutAlign="space-around center">
     <button mat-raised-button class="close-button" [mat-dialog-close]="true">Close</button>
-    <button mat-raised-button class="add-button" [disabled]="!taskForm.valid" (click)="onSubmit()">Add</button>
+    <button *ngIf="!editMode;else editSubmit" mat-raised-button class="add-button" [disabled]="!taskForm.valid" (click)="onCreate()">Add</button>
+    <ng-template #editSubmit>
+      <button mat-raised-button class="add-button" [disabled]="!taskForm.valid" (click)="onEdit()">Edit</button>
+    </ng-template>
   </div>
 </div>

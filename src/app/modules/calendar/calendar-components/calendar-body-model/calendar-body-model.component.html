@@ -37,7 +37,7 @@
 </div>
 <mat-menu #menu="matMenu">
   <ng-template matMenuContent let-selectedTask="task">
-    <button mat-menu-item>
+    <button mat-menu-item (click)="editTask(selectedTask, $event)">
       <mat-icon>edit</mat-icon>
       <span>Edit</span>
     </button>

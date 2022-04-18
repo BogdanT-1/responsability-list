@@ -22,7 +22,13 @@ export class CalendarActionsService {
   }
 
   deleteTask(task: DailyTask) {
-    const taskUrl = "task/"
+    const taskUrl = "task/";
     return this.http.delete(this.backendDefaultRoute + taskUrl + task.ID);
+  }
+
+  editTask(task: DailyTask) {
+    const taskUrl = "task/";
+    const body = JSON.stringify(task);
+    return this.http.put(this.backendDefaultRoute + taskUrl + task.ID, body, {'headers': this.headers});
   }
 }

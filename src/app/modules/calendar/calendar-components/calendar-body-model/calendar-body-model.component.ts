@@ -129,7 +129,37 @@ export class CalendarBodyModelComponent implements OnInit, OnChanges {
     });
   }
 
-  async deleteTask(task: DailyTask) {
+  editTask(selectedTask: DailyTask, event: any) {
+    const dialogRef = this.dialog.open(AddTaskDialogComponent, {
+      data: {
+        task: selectedTask,
+        positionRelativeToElement: {
+          x: event.x,
+          y: event.y,
+        },
+      },
+      panelClass: 'custom-dialog-container',
+      width: '260px',
+      height: '320px',
+      backdropClass: 'no-backdrop',
+    });
+
+    dialogRef.afterClosed().subscribe(async (res) => {
+      if (res) {
+        this.daysDisplayed = await this.prepareCalendar(
+          this.missingDaysBefore,
+          this.missingDaysAfter,
+          this.daysCurrentMonth,
+          this.daysPreviousMonth,
+          this.currentMonth + 1,
+          this.currentYear,
+          this.calendarService
+        );
+      }
+    });
+  }
+
+  deleteTask(task: DailyTask) {
     const dialogRef = this.dialog.open(ConfirmationDailogComponent, {
       data: {
         title: 'Delete Task',
