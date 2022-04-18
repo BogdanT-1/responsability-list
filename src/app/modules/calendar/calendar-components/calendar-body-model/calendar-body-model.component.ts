@@ -17,6 +17,7 @@ import { getCurrentDay } from 'src/app/modules/shared/functions/get-current-day'
 import { MatDialog } from '@angular/material/dialog';
 import { AddTaskDialogComponent } from 'src/app/modules/shared/components/add-task-dialog/add-task-dialog.component';
 import { CalendarActionsService } from '../../services/calendar-actions.service';
+import { DailyTask } from 'src/app/modules/shared/models-constants/dailytask.model';
 
 @Component({
   selector: 'app-calendar-body-model',
@@ -125,6 +126,19 @@ export class CalendarBodyModelComponent implements OnInit, OnChanges {
         this.calendarService
       );
     });
+  }
+
+  async deleteTask(task: DailyTask) {
+    await this.calendarService.deleteTask(task).toPromise();
+    this.daysDisplayed = await this.prepareCalendar(
+      this.missingDaysBefore,
+      this.missingDaysAfter,
+      this.daysCurrentMonth,
+      this.daysPreviousMonth,
+      this.currentMonth + 1,
+      this.currentYear,
+      this.calendarService
+    );
   }
 
   highlightCurrentDay(day: DayModel) {

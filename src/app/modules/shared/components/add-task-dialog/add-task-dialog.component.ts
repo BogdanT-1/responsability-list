@@ -72,7 +72,8 @@ export class AddTaskDialogComponent implements OnInit {
       description: this.taskForm.controls.description.value,
       importance: this.getImportanceDigit(this.taskForm.controls.importance.value),
       done: false,
-      assignedDate: `${this.currentDay.currentDay}-${this.currentDay.currentMonth}-${this.currentDay.year}`
+      assignedDate: `${this.currentDay.currentDay}-${this.currentDay.currentMonth}-${this.currentDay.year}`,
+      ID: 0
     };
 
     await this.calendarService.createTask(newTask).toPromise();

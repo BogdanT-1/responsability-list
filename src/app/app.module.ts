@@ -10,11 +10,13 @@ import { AddTaskDialogComponent } from './modules/shared/components/add-task-dia
 import { MaterialModule } from './modules/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ConfirmationDailogComponent } from './modules/shared/components/confirmation-dialog/confirmation-dailog/confirmation-dailog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AddTaskDialogComponent
+    AddTaskDialogComponent,
+    ConfirmationDailogComponent
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,8 @@
 export interface DailyTask {
-  title: string,
-  description: string,
-  importance: number,
-  assignedDate: string,
-  done: boolean
+  ID: number;
+  title: string;
+  description: string;
+  importance: number;
+  assignedDate: string;
+  done: boolean;
 }

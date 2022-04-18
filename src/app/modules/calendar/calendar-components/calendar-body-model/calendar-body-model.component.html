@@ -12,18 +12,21 @@
         <ng-container *ngIf="day.tasks.length">
           <div *ngFor="let task of day.tasks;let j=index" fxLayout="column" fxLayoutAlign=" center">
             <ng-container *ngIf="j < 3;else remainingTasks">
-              <div fxLayout="row" fxLayoutAlign=" center" class ="importance" [ngClass]="{
+              <div fxLayout="row" fxLayoutAlign="space-between center" class ="importance" [ngClass]="{
                 'importance-low' : task.importance === 0,
                 'importance-medium' : task.importance === 1,
                 'importance-high' : task.importance === 2}"
                 (click)="stopOpenAction($event)">
                   <mat-checkbox [(ngModel)]="task.done"></mat-checkbox>
                   <div>{{ task.title }}</div>
+                  <button mat-icon-button [matMenuTriggerFor]="menu" [matMenuTriggerData]="{task: task}">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
               </div>
             </ng-container>
             <ng-template #remainingTasks>
               <div *ngIf="j === 3" class="remaining-tasks" (click)="stopOpenAction($event)">
-                +{{ day.tasks.length - 3}}
+                <div class="tasks-number">+{{ day.tasks.length - 3}}</div>
               </div>
             </ng-template>
           </div>
@@ -32,3 +35,15 @@
     </ng-container>
   </div>
 </div>
+<mat-menu #menu="matMenu">
+  <ng-template matMenuContent let-selectedTask="task">
+    <button mat-menu-item>
+      <mat-icon>edit</mat-icon>
+      <span>Edit</span>
+    </button>
+    <button mat-menu-item (click)="deleteTask(selectedTask)">
+      <mat-icon>delete</mat-icon>
+      <span>Delete</span>
+    </button>
+  </ng-template>
+</mat-menu>
