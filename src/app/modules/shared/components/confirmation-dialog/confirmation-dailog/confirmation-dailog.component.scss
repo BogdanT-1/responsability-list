@@ -1,0 +1,31 @@
+.dialog-header {
+  color: #d2dfdb;
+  background-color: #2596be;
+  padding: 14px 0px 14px 10px;
+  font-size: 18px;
+}
+
+.action-buttons {
+  margin-top: 38px;
+  margin-left: 10px;
+  margin-right: 10px;
+  .close-button {
+    background-color: #d2dfdb;
+    color: #2596be;
+  }
+  .add-button {
+    background-color: #2596be;
+    color: #d2dfdb;
+  }
+  .add-button[disabled] {
+    color: #9d9e9e;
+    background-color: #d2dfdb;
+  }
+}
+
+.dialog-body {
+  font-size: 18px;
+  margin-left: 10px;
+  margin-top: 8px;
+  color:#2596be;
+}

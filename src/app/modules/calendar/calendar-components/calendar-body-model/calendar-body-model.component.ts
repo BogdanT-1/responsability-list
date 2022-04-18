@@ -18,6 +18,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddTaskDialogComponent } from 'src/app/modules/shared/components/add-task-dialog/add-task-dialog.component';
 import { CalendarActionsService } from '../../services/calendar-actions.service';
 import { DailyTask } from 'src/app/modules/shared/models-constants/dailytask.model';
+import { ConfirmationDailogComponent } from 'src/app/modules/shared/components/confirmation-dialog/confirmation-dailog/confirmation-dailog.component';
 
 @Component({
   selector: 'app-calendar-body-model',
@@ -129,16 +130,31 @@ export class CalendarBodyModelComponent implements OnInit, OnChanges {
   }
 
   async deleteTask(task: DailyTask) {
-    await this.calendarService.deleteTask(task).toPromise();
-    this.daysDisplayed = await this.prepareCalendar(
-      this.missingDaysBefore,
-      this.missingDaysAfter,
-      this.daysCurrentMonth,
-      this.daysPreviousMonth,
-      this.currentMonth + 1,
-      this.currentYear,
-      this.calendarService
-    );
+    const dialogRef = this.dialog.open(ConfirmationDailogComponent, {
+      data: {
+        title: 'Delete Task',
+        body: 'Are you sure you want to delete this task?',
+      },
+      panelClass: 'custom-dialog-container',
+      width: '360px',
+      height: '160px',
+      backdropClass: 'no-backdrop',
+    });
+
+    dialogRef.afterClosed().subscribe(async (res) => {
+      if (res) {
+        await this.calendarService.deleteTask(task).toPromise();
+        this.daysDisplayed = await this.prepareCalendar(
+          this.missingDaysBefore,
+          this.missingDaysAfter,
+          this.daysCurrentMonth,
+          this.daysPreviousMonth,
+          this.currentMonth + 1,
+          this.currentYear,
+          this.calendarService
+        );
+      }
+    });
   }
 
   highlightCurrentDay(day: DayModel) {
