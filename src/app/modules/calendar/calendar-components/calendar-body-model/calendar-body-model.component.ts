@@ -140,7 +140,7 @@ export class CalendarBodyModelComponent implements OnInit, OnChanges {
       },
       panelClass: 'custom-dialog-container',
       width: '260px',
-      height: '320px',
+      height: '350px',
       backdropClass: 'no-backdrop',
     });
 

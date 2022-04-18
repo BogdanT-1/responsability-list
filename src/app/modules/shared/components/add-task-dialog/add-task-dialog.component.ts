@@ -92,7 +92,7 @@ export class AddTaskDialogComponent implements OnInit {
       title: this.taskForm.controls.title.value,
       description: this.taskForm.controls.description.value,
       importance: this.getImportanceDigit(this.taskForm.controls.importance.value),
-      done: false,
+      done: this.taskForm.controls.done.value,
       assignedDate: this.editedTask.assignedDate,
       ID: this.editedTask.ID
     };
@@ -106,6 +106,7 @@ export class AddTaskDialogComponent implements OnInit {
       title: new FormControl('', [Validators.required]),
       description: new FormControl(''),
       importance: new FormControl("Low"),
+      done: new FormControl(false)
     });
   }
 
@@ -113,6 +114,7 @@ export class AddTaskDialogComponent implements OnInit {
     this.taskForm.controls.title.setValue(this.editedTask.title);
     this.taskForm.controls.description.setValue(this.editedTask.description);
     this.taskForm.controls.importance.setValue(this.getImportanceValues(this.editedTask.importance));
+    this.taskForm.controls.done.setValue(this.editedTask.done);
   }
 
   getImportanceDigit(importance: string) {

@@ -31,6 +31,10 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+      <div *ngIf="editMode" class="completed-region">
+        <span>Completed: </span>
+        <mat-checkbox formControlName="done"></mat-checkbox>
+      </div>
     </div>
   </div>
   <div class="action-buttons" fxLayout="row" fxLayoutAlign="space-around center">
