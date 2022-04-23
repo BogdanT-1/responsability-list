@@ -83,11 +83,20 @@
   margin-top: -19px;
 }
 
+.past-day {
+  background-color: #E6E6DF;
+  color: white;
+}
+
 .tasks-number {
   color: #d2dfdb;
   font-size: 18px;
   margin-top: -2px;
   font-weight: 500;
+}
+
+.done-task {
+  opacity: 0.8;
 }
 
 ::ng-deep .mat-checkbox-checked .mat-checkbox-background,

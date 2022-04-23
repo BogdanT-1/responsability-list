@@ -7,21 +7,21 @@
   <div fxLayout="row" fxLayoutAlign="start center" class="day-container">
     <ng-container
       *ngFor="let day of daysDisplayed;let i = index" #dayRef>
-      <div class="calendar-day" (click)="opendAddTaskDialog(day, $event)">
+      <div class="calendar-day" (click)="opendAddTaskDialog(day, $event)" [ngClass]="{'past-day': dayInPast(day)}">
         <span [ngClass]="{'current-day': highlightCurrentDay(day)}"> {{ day.currentDay }} </span>
         <ng-container *ngIf="day.tasks.length">
           <div *ngFor="let task of day.tasks;let j=index" fxLayout="column" fxLayoutAlign=" center">
             <ng-container *ngIf="j < 3;else remainingTasks">
               <div fxLayout="row" fxLayoutAlign="space-between center" class ="importance" [ngClass]="{
-                'importance-low' : task.importance === 0,
-                'importance-medium' : task.importance === 1,
-                'importance-high' : task.importance === 2}"
-                (click)="stopOpenAction($event)">
-                  <mat-checkbox [(ngModel)]="task.done"></mat-checkbox>
-                  <div>{{ task.title }}</div>
-                  <button mat-icon-button [matMenuTriggerFor]="menu" [matMenuTriggerData]="{task: task}">
-                    <mat-icon>more_vert</mat-icon>
-                  </button>
+              'importance-low' : task.importance === 0,
+              'importance-medium' : task.importance === 1,
+              'importance-high' : task.importance === 2}"
+              (click)="stopOpenAction($event)">
+                <mat-checkbox [ngModel]="task.done" (ngModelChange)="sendUpdate(task, $event)" [disabled]="task.done"></mat-checkbox>
+                <div>{{ task.title }}</div>
+                <button mat-icon-button [matMenuTriggerFor]="menu" [matMenuTriggerData]="{task: task}">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
               </div>
             </ng-container>
             <ng-template #remainingTasks>

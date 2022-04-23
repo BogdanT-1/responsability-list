@@ -2,9 +2,11 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
   OnChanges,
   OnInit,
+  Output,
   QueryList,
   SimpleChanges,
   ViewChildren,
@@ -39,6 +41,7 @@ import { ConfirmationDailogComponent } from 'src/app/modules/shared/components/c
 export class CalendarBodyModelComponent implements OnInit, OnChanges {
   @Input() currentMonth: number = 0;
   @Input() currentYear: number = 0;
+  @Output() toComplete = new EventEmitter<any>();
   daysCurrentMonth: number = 0;
   daysOfWeek = [
     'Monday',
@@ -84,15 +87,7 @@ export class CalendarBodyModelComponent implements OnInit, OnChanges {
         )
       );
 
-    this.daysDisplayed = await this.prepareCalendar(
-      this.missingDaysBefore,
-      this.missingDaysAfter,
-      this.daysCurrentMonth,
-      this.daysPreviousMonth,
-      this.currentMonth + 1,
-      this.currentYear,
-      this.calendarService
-    );
+    this.refreshCalendar();
   }
 
   ngOnInit(): void {}
@@ -102,6 +97,9 @@ export class CalendarBodyModelComponent implements OnInit, OnChanges {
   }
 
   opendAddTaskDialog(day: DayModel, event: any) {
+    if (this.dayInPast(day)) {
+      return;
+    }
     const dialogRef = this.dialog.open(AddTaskDialogComponent, {
       data: {
         day: day,
@@ -117,15 +115,7 @@ export class CalendarBodyModelComponent implements OnInit, OnChanges {
     });
 
     dialogRef.afterClosed().subscribe(async () => {
-      this.daysDisplayed = await this.prepareCalendar(
-        this.missingDaysBefore,
-        this.missingDaysAfter,
-        this.daysCurrentMonth,
-        this.daysPreviousMonth,
-        this.currentMonth + 1,
-        this.currentYear,
-        this.calendarService
-      );
+      this.refreshCalendar();
     });
   }
 
@@ -146,15 +136,7 @@ export class CalendarBodyModelComponent implements OnInit, OnChanges {
 
     dialogRef.afterClosed().subscribe(async (res) => {
       if (res) {
-        this.daysDisplayed = await this.prepareCalendar(
-          this.missingDaysBefore,
-          this.missingDaysAfter,
-          this.daysCurrentMonth,
-          this.daysPreviousMonth,
-          this.currentMonth + 1,
-          this.currentYear,
-          this.calendarService
-        );
+        this.refreshCalendar();
       }
     });
   }
@@ -174,15 +156,7 @@ export class CalendarBodyModelComponent implements OnInit, OnChanges {
     dialogRef.afterClosed().subscribe(async (res) => {
       if (res) {
         await this.calendarService.deleteTask(task).toPromise();
-        this.daysDisplayed = await this.prepareCalendar(
-          this.missingDaysBefore,
-          this.missingDaysAfter,
-          this.daysCurrentMonth,
-          this.daysPreviousMonth,
-          this.currentMonth + 1,
-          this.currentYear,
-          this.calendarService
-        );
+        this.refreshCalendar();
       }
     });
   }
@@ -200,11 +174,46 @@ export class CalendarBodyModelComponent implements OnInit, OnChanges {
     return false;
   }
 
+  dayInPast(day: DayModel) {
+    const currentDay = this.getCurrentDay();
+    const transformedDay = new Date(
+      day.year,
+      day.currentMonth - 1,
+      day.currentDay
+    );
+    if (currentDay.getTime() > transformedDay.getTime()) {
+      return true;
+    }
+    return false;
+  }
+
   daysInMonth(month: number, year: number) {
     return new Date(year, month + 1, 0).getDate();
   }
 
   getDayName(date: Date) {
     return date.toLocaleDateString('en-us', { weekday: 'long' });
+  }
+
+  sendUpdate(task: DailyTask, event: any) {
+    if (task.done) {
+      return;
+    }
+    this.toComplete.emit({
+      id: task.ID,
+      checked: event,
+    });
+  }
+
+  async refreshCalendar() {
+    this.daysDisplayed = await this.prepareCalendar(
+      this.missingDaysBefore,
+      this.missingDaysAfter,
+      this.daysCurrentMonth,
+      this.daysPreviousMonth,
+      this.currentMonth + 1,
+      this.currentYear,
+      this.calendarService
+    );
   }
 }

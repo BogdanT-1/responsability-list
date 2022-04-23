@@ -31,4 +31,10 @@ export class CalendarActionsService {
     const body = JSON.stringify(task);
     return this.http.put(this.backendDefaultRoute + taskUrl + task.ID, body, {'headers': this.headers});
   }
+
+  completeTasks(IDs: number[]) {
+    const taskUrl = "tasks/complete"
+    const body = JSON.stringify({ids: IDs});
+    return this.http.post(this.backendDefaultRoute + taskUrl, body, {'headers': this.headers});
+  }
 }
