@@ -1,0 +1,23 @@
+<div fxLayout="column" fxLayoutAlign="center center" class="login-container">
+  <div class="login-sector">
+    <div fxLayout="column" fxLayoutAlign="center center" class="login-section" fxLayoutGap="35px">
+      <h2>Login</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="55px">
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput  type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+          <mat-error *ngIf="f.email.errors?.required">Email is required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input matInput  type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+          <mat-error *ngIf="f.password.errors?.required">Password is required</mat-error>
+        </mat-form-field>
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="35px">
+            <button mat-raised-button [disabled]="loading" class="btn btn-primary">Login</button>
+            <button mat-raised-button class="btn btn-link">Register</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

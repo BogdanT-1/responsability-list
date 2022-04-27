@@ -1,0 +1,28 @@
+.login-container {
+  height: 100%;
+  background-color: #d2dfdb;
+}
+
+.login-sector {
+  width: 400px;
+  height: 450px;
+  border-radius: 10%;
+  background-color: #2596be;
+  color: #d2dfdb;
+}
+
+.login-section {
+  margin-top: 20%;
+}
+
+::ng-deep .mat-form-field-label {
+  color: #d2dfdb !important;
+}
+
+::ng-deep.mat-form-field-underline {
+  background-color: #d2dfdb !important;
+}
+
+::ng-deep.mat-form-field-ripple {
+ background-color: #d2dfdb !important;;
+}

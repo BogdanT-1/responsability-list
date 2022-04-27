@@ -11,12 +11,14 @@ import { MaterialModule } from './modules/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ConfirmationDailogComponent } from './modules/shared/components/confirmation-dialog/confirmation-dailog/confirmation-dailog.component';
+import { LoginPageComponent } from './login-page/login-page/login-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AddTaskDialogComponent,
-    ConfirmationDailogComponent
+    ConfirmationDailogComponent,
+    LoginPageComponent
   ],
   imports: [
     BrowserModule,
