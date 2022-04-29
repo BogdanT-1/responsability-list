@@ -1,0 +1,11 @@
+<div>
+  <div class="dialog-header">Tasks for {{ getDate() | date:'MMM d, y' }}</div>
+  <div *ngFor="let task of tasks;" fxLayout="column" fxLayoutAlign=" center">
+      <div fxLayout="row" fxLayoutAlign="center center" class ="importance" [ngClass]="{
+      'importance-low' : task.importance === 0,
+      'importance-medium' : task.importance === 1,
+      'importance-high' : task.importance === 2}">
+        <div>{{ task.title }}</div>
+      </div>
+  </div>
+</div>

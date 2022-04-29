@@ -15,6 +15,11 @@ export class CalendarActionsService {
     return this.http.get<DailyTask[]>(this.backendDefaultRoute + taskUrl);
   }
 
+  getTasksByAssignedDate(assignedDate: string) {
+    const taskUrl = "tasks/day/";
+    return this.http.get<DailyTask[]>(this.backendDefaultRoute + taskUrl + assignedDate);
+  }
+
   createTask(task: DailyTask) {
     const taskUrl = "task/";
     const body = JSON.stringify(task);

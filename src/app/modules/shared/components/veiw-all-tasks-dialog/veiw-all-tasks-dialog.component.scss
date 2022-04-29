@@ -1,0 +1,29 @@
+
+.dialog-header {
+  color: #d2dfdb;
+  background-color: #2596be;
+  padding: 14px 0px 14px 10px;
+  font-size: 18px;
+}
+
+.importance {
+  margin-top: 15px;
+  margin-bottom: 6px;
+  height: 35px;
+  width: 80%;
+  color: #2596be;
+  font-weight: bold;
+  border-radius: 8px;
+}
+.importance-low {
+  background-color: #f2dc55;
+  border: 5px groove rgba(#f2dc55, .7);
+}
+.importance-medium {
+  background-color: orange;
+  border: 5px groove rgba(orange, .7);
+}
+.importance-high {
+  background-color: red;
+  border: 5px groove rgba(red, .7);
+}

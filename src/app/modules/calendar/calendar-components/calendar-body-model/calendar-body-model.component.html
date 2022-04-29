@@ -25,7 +25,7 @@
               </div>
             </ng-container>
             <ng-template #remainingTasks>
-              <div *ngIf="j === 3" class="remaining-tasks" (click)="stopOpenAction($event)">
+              <div *ngIf="j === 3" class="remaining-tasks" (click)="OpenViewAll($event, day)">
                 <div class="tasks-number">+{{ day.tasks.length - 3}}</div>
               </div>
             </ng-template>

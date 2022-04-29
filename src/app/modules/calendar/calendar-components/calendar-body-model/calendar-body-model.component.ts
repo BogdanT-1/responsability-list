@@ -21,6 +21,7 @@ import { AddTaskDialogComponent } from 'src/app/modules/shared/components/add-ta
 import { CalendarActionsService } from '../../services/calendar-actions.service';
 import { DailyTask } from 'src/app/modules/shared/models-constants/dailytask.model';
 import { ConfirmationDailogComponent } from 'src/app/modules/shared/components/confirmation-dialog/confirmation-dailog/confirmation-dailog.component';
+import { VeiwAllTasksDialogComponent } from 'src/app/modules/shared/components/veiw-all-tasks-dialog/veiw-all-tasks-dialog.component';
 
 @Component({
   selector: 'app-calendar-body-model',
@@ -94,6 +95,22 @@ export class CalendarBodyModelComponent implements OnInit, OnChanges {
 
   stopOpenAction(event: any) {
     event.stopPropagation();
+  }
+
+  OpenViewAll(event: any, day: DayModel) {
+    const dialogRef = this.dialog.open(VeiwAllTasksDialogComponent, {
+      data: {
+        day: day,
+      },
+      panelClass: 'custom-dialog-container',
+      width: '340px',
+      height: '400px',
+      backdropClass: 'no-backdrop',
+    });
+
+    dialogRef.afterClosed().subscribe(async () => {
+      this.refreshCalendar();
+    });
   }
 
   opendAddTaskDialog(day: DayModel, event: any) {

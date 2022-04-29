@@ -14,6 +14,7 @@ export class LoginPageComponent implements OnInit {
   loading = false;
   submitted = false;
   returnUrl: string;
+  err = false;
   constructor(
     private authService: AuthService,
     private tokenStorage: TokenStorageService,
@@ -49,9 +50,11 @@ export class LoginPageComponent implements OnInit {
           this.tokenStorage.saveToken(data.access_token);
           this.tokenStorage.saveUser(`${data.email}-${data.username}`);
           this.router.navigate(['/calendar']);
+          this.loading = false;
         }
       },
       (err) => {
+        this.err = true;
         this.loading = false;
       }
     );
