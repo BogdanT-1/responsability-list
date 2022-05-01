@@ -98,6 +98,7 @@ export class CalendarBodyModelComponent implements OnInit, OnChanges {
   }
 
   OpenViewAll(event: any, day: DayModel) {
+    event.stopPropagation();
     const dialogRef = this.dialog.open(VeiwAllTasksDialogComponent, {
       data: {
         day: day,
