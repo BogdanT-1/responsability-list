@@ -1,0 +1,28 @@
+<div fxLayout="column" fxLayoutAlign="center center" class="login-container">
+  <div class="login-sector">
+    <div fxLayout="column" fxLayoutAlign="center center" class="login-section" fxLayoutGap="35px">
+      <h2>Register</h2>
+      <form [formGroup]="loginForm" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="55px">
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput  type="text" formControlName="email" class="form-control"/>
+          <mat-error *ngIf="f.email.errors?.required">Email is required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Username</mat-label>
+          <input matInput  type="text" formControlName="username" class="form-control"/>
+          <mat-error *ngIf="f.username.errors?.required">Username is required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input matInput  type="password" formControlName="password" class="form-control"/>
+          <mat-error *ngIf="f.password.errors?.required">Password is required</mat-error>
+        </mat-form-field>
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="35px">
+            <button mat-raised-button (click)="backLogin($event)" class="btn btn-primary">Back to Login</button>
+            <button mat-raised-button (click)="register()">Register</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
