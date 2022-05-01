@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ConfirmationDailogComponent } from './modules/shared/components/confirmation-dialog/confirmation-dailog/confirmation-dailog.component';
 import { LoginPageComponent } from './login-page/login-page/login-page.component';
 import { VeiwAllTasksDialogComponent } from './modules/shared/components/veiw-all-tasks-dialog/veiw-all-tasks-dialog.component';
+import { RegisterComponent } from './login-page/register/register.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { VeiwAllTasksDialogComponent } from './modules/shared/components/veiw-al
     AddTaskDialogComponent,
     ConfirmationDailogComponent,
     LoginPageComponent,
-    VeiwAllTasksDialogComponent
+    VeiwAllTasksDialogComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

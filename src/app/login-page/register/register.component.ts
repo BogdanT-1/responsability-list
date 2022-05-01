@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/modules/calendar/services/auth.service';
-import { TokenStorageService } from 'src/app/modules/shared/services/session-storage.service';
 
 @Component({
-  selector: 'app-login-page',
-  templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.scss'],
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss']
 })
-export class LoginPageComponent implements OnInit {
+export class RegisterComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
   submitted = false;
@@ -17,10 +17,10 @@ export class LoginPageComponent implements OnInit {
   err = false;
   constructor(
     private authService: AuthService,
-    private tokenStorage: TokenStorageService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private _snackBar: MatSnackBar
   ) {}
 
   get f() {
@@ -29,11 +29,12 @@ export class LoginPageComponent implements OnInit {
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
+      username: ['', Validators.required],
       password: ['', Validators.required],
     });
   }
 
-  onSubmit(): void {
+  async register(): Promise<void> {
     this.submitted = true;
 
     if (this.loginForm.invalid) {
@@ -41,26 +42,22 @@ export class LoginPageComponent implements OnInit {
     }
     const user = {
       email: this.f.email.value,
+      username: this.f.username.value,
       password: this.f.password.value,
     };
 
-    this.authService.loginUser(user).subscribe(
-      (data: any) => {
-        if (data) {
-          this.tokenStorage.saveToken(data.access_token);
-          this.tokenStorage.saveUser(`${data.email}-${data.username}`);
-          this.router.navigate(['/calendar']);
-          this.loading = false;
+    const res = await this.authService.createUser(user).toPromise()
+    if (res) {
+      this._snackBar.open(
+        "User has been registered", "X", {
+          duration: 5000
         }
-      },
-      (err) => {
-        this.err = true;
-        this.loading = false;
-      }
-    );
+      )
+    }
   }
 
-  register() {
-    this.router.navigate(['/register']);
+  backLogin(event: any) {
+    event.stopPropagation();
+    this.router.navigate(['/login']);
   }
 }
