@@ -36,7 +36,7 @@ import { RegisterComponent } from './login/register/register.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  //providers: [interceptorProvider],
+  providers: [interceptorProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

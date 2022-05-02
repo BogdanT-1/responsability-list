@@ -6,7 +6,7 @@ import { DailyTask } from '../../shared/models-constants/dailytask.model';
   providedIn: 'root'
 })
 export class CalendarActionsService {
-  backendDefaultRoute: string = "http://localhost:9010/";
+  backendDefaultRoute: string = "http://localhost:9010/v1/";
   headers = { 'content-type': 'application/json'} ;
   constructor(private http: HttpClient) { }
 
