@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { DailyTask } from '../../shared/models-constants/dailytask.model';
+import { DailyTask } from '../../modules/shared/models-constants/dailytask.model';
 
 @Injectable({
   providedIn: 'root'

@@ -11,9 +11,10 @@ import { MaterialModule } from './modules/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ConfirmationDailogComponent } from './modules/shared/components/confirmation-dialog/confirmation-dailog/confirmation-dailog.component';
-import { LoginPageComponent } from './login-page/login-page/login-page.component';
 import { VeiwAllTasksDialogComponent } from './modules/shared/components/veiw-all-tasks-dialog/veiw-all-tasks-dialog.component';
-import { RegisterComponent } from './login-page/register/register.component';
+import { interceptorProvider } from './core/interceptors/request-interceptor';
+import { LoginPageComponent } from './login/login-page/login-page.component';
+import { RegisterComponent } from './login/register/register.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { RegisterComponent } from './login-page/register/register.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  //providers: [interceptorProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
