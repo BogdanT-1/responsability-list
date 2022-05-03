@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { TokenStorageService } from 'src/app/core/services/session-storage.service';
 import { getCurrentDay } from 'src/app/modules/shared/functions/get-current-day';
 import { months } from 'src/app/modules/shared/models-constants/months.constant';
 import { CalendarActionsService } from '../../services/calendar-actions.service';
@@ -14,7 +15,12 @@ export class CalendarPageComponent implements OnInit {
   currentYear: number = 1;
   @ViewChild(CalendarBodyModelComponent)
   calendarBody: CalendarBodyModelComponent;
-  constructor(public calendarService: CalendarActionsService) {}
+
+  constructor(
+    public calendarService: CalendarActionsService,
+    public tokenService: TokenStorageService
+  ) {}
+
   months: string[] = months;
   tasksToComplete: number[] = [];
   getCurrentDay = getCurrentDay;
@@ -50,9 +56,21 @@ export class CalendarPageComponent implements OnInit {
     }
   }
 
+  goToTodaysDate() {
+    this.currentMonth = new Date().getMonth();
+    this.currentYear = new Date().getFullYear();
+  }
+
   async completeTasks() {
     await this.calendarService.completeTasks(this.tasksToComplete).toPromise();
     this.calendarBody.refreshCalendar();
     this.tasksToComplete = [];
+  }
+
+  getUser() {
+    const user = this.tokenService.getUser();
+    if (user) {
+      return user.split("-")[1];
+    }
   }
 }

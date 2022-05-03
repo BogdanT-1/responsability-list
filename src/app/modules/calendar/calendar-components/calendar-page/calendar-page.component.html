@@ -1,20 +1,25 @@
 <div class="page-container">
-  <div class="header-section" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
-    <mat-icon class="header-icon">calendar_today</mat-icon>
-    <div class="title-text-style">
-      Calendar
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <div class="header-section" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+      <mat-icon class="header-icon">calendar_today</mat-icon>
+      <div class="title-text-style">
+        Calendar
+      </div>
+      <div class="title-text-style today">
+        <span (click)="goToTodaysDate()" class="pointer-cursor">Today</span>
+      </div>
+      <div class="title-text-style">{{ getCurrentDay() | date:'M/d/yy'}}</div>
+      <ng-container>
+        <mat-icon class="pointer-cursor" (click)="modifyDate(-1)">keyboard_arrow_left</mat-icon>
+        <mat-icon class="pointer-cursor smaller-gap" (click)="modifyDate(1)">keyboard_arrow_right</mat-icon>
+      </ng-container>
+      <div class="title-text-style">{{ months[currentMonth] }} {{ currentYear }}</div>
+      <div>
+        <button *ngIf="tasksToComplete.length" mat-raised-button class="add-button" (click)="completeTasks()">Complete Tasks</button>
+      </div>
     </div>
-    <div class="title-text-style today">
-      <span>Today</span>
-    </div>
-    <div class="title-text-style">{{ getCurrentDay() | date:'M/d/yy'}}</div>
-    <ng-container>
-      <mat-icon class="pointer-cursor" (click)="modifyDate(-1)">keyboard_arrow_left</mat-icon>
-      <mat-icon class="pointer-cursor smaller-gap" (click)="modifyDate(1)">keyboard_arrow_right</mat-icon>
-    </ng-container>
-    <div class="title-text-style">{{ months[currentMonth] }} {{ currentYear }}</div>
-    <div>
-      <button *ngIf="tasksToComplete.length" mat-raised-button class="add-button" (click)="completeTasks()">Complete Tasks</button>
+    <div class="user-section">
+      {{ getUser() }}
     </div>
   </div>
   <mat-divider></mat-divider>

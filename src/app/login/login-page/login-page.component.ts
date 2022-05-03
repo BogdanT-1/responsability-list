@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -26,6 +26,7 @@ export class LoginPageComponent implements OnInit {
   get f() {
     return this.loginForm.controls;
   }
+
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
@@ -51,6 +52,7 @@ export class LoginPageComponent implements OnInit {
           this.tokenStorage.saveUser(`${data.email}-${data.username}`);
           this.router.navigate(['/calendar']);
           this.loading = false;
+          this.authService.setUserAsLoggedInOut(true);
         }
       },
       (err) => {
