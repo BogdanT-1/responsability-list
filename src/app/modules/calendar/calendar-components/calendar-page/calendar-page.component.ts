@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { TokenStorageService } from 'src/app/core/services/session-storage.service';
 import { getCurrentDay } from 'src/app/modules/shared/functions/get-current-day';
 import { months } from 'src/app/modules/shared/models-constants/months.constant';
@@ -18,7 +19,8 @@ export class CalendarPageComponent implements OnInit {
 
   constructor(
     public calendarService: CalendarActionsService,
-    public tokenService: TokenStorageService
+    public tokenService: TokenStorageService,
+    public router: Router
   ) {}
 
   months: string[] = months;
@@ -72,5 +74,10 @@ export class CalendarPageComponent implements OnInit {
     if (user) {
       return user.split("-")[1];
     }
+  }
+
+  loggOut() {
+    this.tokenService.signOut();
+    this.router.navigate(["/login"])
   }
 }

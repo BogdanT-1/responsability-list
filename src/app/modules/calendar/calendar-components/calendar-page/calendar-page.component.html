@@ -19,9 +19,15 @@
       </div>
     </div>
     <div class="user-section">
-      {{ getUser() }}
+      <div class="user-initial" [matMenuTriggerFor]="menu">{{ getUser().charAt(0) }}</div>
     </div>
   </div>
   <mat-divider></mat-divider>
   <app-calendar-body-model [currentMonth]="currentMonth" [currentYear]="currentYear" (toComplete)="addToComplete($event)"></app-calendar-body-model>
 </div>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="loggOut()" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+    <span>Log Out</span>
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-menu>
