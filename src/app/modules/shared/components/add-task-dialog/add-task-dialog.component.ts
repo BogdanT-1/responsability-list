@@ -84,7 +84,7 @@ export class AddTaskDialogComponent implements OnInit {
     };
 
     await this.calendarService.createTask(newTask).toPromise();
-    this.dialogRef.close();
+    this.dialogRef.close(true);
   }
 
   async onEdit() {

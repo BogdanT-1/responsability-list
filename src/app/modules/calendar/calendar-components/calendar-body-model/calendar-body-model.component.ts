@@ -132,8 +132,10 @@ export class CalendarBodyModelComponent implements OnInit, OnChanges {
       backdropClass: 'no-backdrop',
     });
 
-    dialogRef.afterClosed().subscribe(async () => {
-      this.refreshCalendar();
+    dialogRef.afterClosed().subscribe(async (res) => {
+      if (res) {
+        this.refreshCalendar();
+      }
     });
   }
 
