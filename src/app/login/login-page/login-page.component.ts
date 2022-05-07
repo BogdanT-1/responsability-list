@@ -48,7 +48,9 @@ export class LoginPageComponent implements OnInit {
     this.authService.loginUser(user).subscribe(
       (data: any) => {
         if (data) {
-          this.tokenStorage.saveToken(data.access_token);
+          console.log(data);
+          this.tokenStorage.saveToken(data.access_token, data.access_token_expires_at);
+          this.tokenStorage.saveRefreshToken(data.refresh_token, data.refresh_token_expires_at)
           this.tokenStorage.saveUser(`${data.email}-${data.username}`);
           this.router.navigate(['/calendar']);
           this.loading = false;

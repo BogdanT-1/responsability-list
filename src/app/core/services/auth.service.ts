@@ -27,6 +27,12 @@ export class AuthService {
     return this.http.post(this.backendDefaultRoute + userUrl, body, {'headers': this.headers});
   }
 
+  renewAccessToken(refreshToken: any) {
+    const userUrl = "refreshToken/";
+    const body = JSON.stringify({refresh_token: refreshToken});
+    return this.http.post(this.backendDefaultRoute + userUrl, body, {'headers': this.headers});
+  }
+
   setUserAsLoggedInOut(status: boolean) {
     this.authenticated = status;
     if (!this.authenticated) {
