@@ -76,7 +76,7 @@ export class CalendarPageComponent implements OnInit {
     }
   }
 
-  loggOut() {
+  logOut() {
     this.tokenService.signOut();
     this.router.navigate(["/login"])
   }
